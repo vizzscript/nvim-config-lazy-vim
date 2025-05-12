@@ -30,6 +30,16 @@ function _G.toggle_new_vertical_terminal()
   term_counter = term_counter + 1 -- Increment terminal counter for the next terminal
 end
 
+-- Keymap for auto import missing libraries in Java.
+vim.keymap.set("n", "<leader>ai", vim.lsp.buf.code_action, { desc = "LSP Code Action (Auto Import)" })
+
+-- Keymap for running java files
+vim.keymap.set("n", "<leader>rj", function()
+  local filename = vim.fn.expand("%")
+  local classname = vim.fn.fnamemodify(filename, ":r")
+  vim.cmd("TermExec cmd='javac " .. filename .. " && java " .. classname .. "'")
+end, { desc = "Run Java in Terminal" })
+
 -- Keymap for toggling vertical terminals (sub terminals)
 vim.keymap.set("n", "<leader>tr", function()
   _G.toggle_new_vertical_terminal() -- Open a new vertical terminal
